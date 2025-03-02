@@ -1,1 +1,12 @@
 /docker-compose/default/.data/
+target/
+*.log
+*.class
+*.jar
+*.war
+*.ear
+node_modules/
+.env
+.DS_Store
+.idea/
+.vscode/
