@@ -1,0 +1,27 @@
+dependencies:
+- name: tech-common
+  repository: file://../../tech-common
+  version: 0.1.0
+- name: configserver
+  repository: file://../../tech-services/configserver
+  version: 0.1.0
+- name: eurekaserver
+  repository: file://../../tech-services/eurekaserver
+  version: 0.1.0
+- name: accounts
+  repository: file://../../tech-services/accounts
+  version: 0.1.0
+- name: cards
+  repository: file://../../tech-services/cards
+  version: 0.1.0
+- name: loans
+  repository: file://../../tech-services/loans
+  version: 0.1.0
+- name: gatewayserver
+  repository: file://../../tech-services/gatewayserver
+  version: 0.1.0
+- name: message
+  repository: file://../../tech-services/message
+  version: 0.1.0
+digest: sha256:264af03a3156f02b216ece8f962b4e3196ceb44ebdbab295ca9236550e5d4973
+generated: "2024-08-24T12:35:06.180969111+04:00"

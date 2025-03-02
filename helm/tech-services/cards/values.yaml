@@ -1,0 +1,29 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+deploymentName: cards-deployment
+serviceName: cards
+appLabel: cards
+appName: cards
+dbURL: jdbc:postgresql://postgresql.default.svc.cluster.local:5432/postgres?currentSchema=card&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+replicaCount: 1
+
+image:
+  repository: manite/cards-img
+  tag: s5
+
+containerPort: 8088
+
+service:
+  type: LoadBalancer
+  port: 8088
+  targetPort: 8088
+
+appname_enabled: true
+profile_enabled: true
+config_enabled: true
+eureka_enabled: true
+resouceserver_enabled: false
+otel_enabled: true
+rabbit_enabled: true
+db_enabled: true

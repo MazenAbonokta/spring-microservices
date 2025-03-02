@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: gatewayserver
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://localhost:8070/realms/master/protocol/openid-connect/certs"
+  config:
+    import: "optional:configserver:http://localhost:8090/"
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      httpclient:
+        response-timeout: 5s
+        connect-timeout: 1000
+  #data:
+  #  redis:
+  #    connect-timeout: 2s
+  #    host: localhost
+  #    port: 6379
+  #    timeout: 1s
+#
+server:
+  port: 8762
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+info:
+  app:
+    name: "dsd"
+    description: "dd"
+    version: "ddd"
+logging:
+  level:
+    com:
+      bank:
+        tech:
+          gatewayserver: debug
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 50
+      permitted-number-of-calls-in-half-open-state: 2
+      wait-duration-in-open-state:
+        seconds: 5
+      failure-rate-threshold: 50
+

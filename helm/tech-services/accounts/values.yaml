@@ -1,0 +1,29 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+deploymentName: accounts-deployment
+serviceName: accounts
+appLabel: accounts
+appName: accounts
+dbURL: jdbc:postgresql://postgresql.default.svc.cluster.local:5432/postgres?currentSchema=account&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+replicaCount: 1
+
+image:
+  repository: manite/accounts-img
+  tag: s5
+
+containerPort: 8081
+
+service:
+  type: LoadBalancer
+  port: 8081
+  targetPort: 8081
+
+appname_enabled: true
+profile_enabled: true
+config_enabled: true
+eureka_enabled: true
+resouceserver_enabled: false
+otel_enabled: true
+rabbit_enabled: true
+db_enabled: true

@@ -1,0 +1,29 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+deploymentName: eurekaserver-deployment
+serviceName: eurekaserver
+appLabel: eurekaserver
+appName: eurekaserver
+
+replicaCount: 1
+
+image:
+  repository: manite/eurekaserver-img
+  tag: s5
+
+containerPort: 8761
+
+service:
+  type: LoadBalancer
+  port: 8761
+  targetPort: 8761
+
+appname_enabled: true
+profile_enabled: false
+config_enabled: true
+eureka_enabled: false
+resouceserver_enabled: false
+otel_enabled: true
+rabbit_enabled: false
+db_enabled: false

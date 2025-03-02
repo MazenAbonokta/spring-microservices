@@ -1,0 +1,13 @@
+DROP SCHEMA IF EXISTS "account" CASCADE;
+CREATE SCHEMA "account";
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+DROP TYPE IF EXISTS account_type;
+
+CREATE TYPE account_type AS ENUM ('SAVING','CURRENT');
+
+DROP TYPE IF EXISTS address_type;
+
+CREATE TYPE address_type AS ENUM ('HOME','ALTERNATIVE','OFFICE');
+

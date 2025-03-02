@@ -1,0 +1,6 @@
+dependencies:
+- name: tech-common
+  repository: file://../../tech-common
+  version: 0.1.0
+digest: sha256:d8daf1e0c8dae2284e3ab84d13a0fcece22d5d3175ea3e80ba5aafac944bb39e
+generated: "2024-08-24T17:44:47.204367864+04:00"

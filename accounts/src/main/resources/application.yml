@@ -1,0 +1,101 @@
+spring:
+  application:
+    name: accounts
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    show-sql: true
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/init-schema.sql
+      platform: postgres
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=account&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  config:
+    import: "optional:configserver:http://localhost:8090/"
+  profiles:
+    active:
+      - "prod"
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+    function:
+      definition: updateCommunication
+    stream:
+      bindings:
+        updateCommunication-in-0:
+          destination: communication-sent
+          group: ${spring.application.name}
+        sendCommunication-out-0:
+          destination: send-communication
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    connection-timeout: 10s
+server:
+  port: 8081
+
+build:
+  version: "3.0"
+
+
+
+accounts:
+  message: "Welcome to EazyBank accounts related local APIs "
+  contactDetails:
+    name: "John Doe - Developer"
+    email: "john@eazybank.com"
+  onCallSupport:
+    - (555) 555-1234
+    - (555) 523-1345
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 50
+      permitted-number-of-calls-in-half-open-state: 2
+      wait-duration-in-open-state:
+        seconds: 5
+      failure-rate-threshold: 50
+resilience4j:
+  retry:
+    configs:
+      default:
+        max-attempts: 3
+        wait-duration:
+          nanos: 500
+        fail-after-max-attempts: true
+        exponential-backoff-multiplier: 2
+        enable-exponential-backoff: true
+  ratelimiter:
+    configs:
+      default:
+        limit-for-period: 1
+        timeout-duration:
+          seconds: 1
+        limit-refresh-period:
+          seconds: 2
+management:
+  metrics:
+    tags:
+      application : ${spring.application.name}
+
+
+logging:
+  level:
+    com:
+      bank:
+        tech:
+          accounts: debug
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"

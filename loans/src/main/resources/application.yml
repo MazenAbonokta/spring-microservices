@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: loans
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    show-sql: true
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:sql/init-schema.sql
+      platform: postgres
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=loan&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  profiles:
+    active:
+      - "prod"
+  config:
+    import: "optional:configserver:http://localhost:8090/"
+server:
+  port: 8085
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+logging:
+  level:
+    com:
+      bank:
+        tech:
+          loans: debug
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
+
